@@ -1,0 +1,385 @@
+/* ===== Design tokens ===== */
+:root {
+  --paper: #f7f1e3;
+  --ink: #14120e;
+  --ink-soft: #4a4638;
+  --line: #14120e;
+
+  --green: #1f8a4c;
+  --orange: #ff5a1f;
+  --yellow: #ffce3a;
+  --danger: #e0362b;
+
+  --shadow-sm: 4px 4px 0 var(--ink);
+  --shadow-md: 6px 6px 0 var(--ink);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+
+/* ===== Auth pages ===== */
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+.auth-form {
+  background: #fff;
+  padding: 2.75rem 2.5rem;
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+  text-align: center;
+  color: var(--ink);
+}
+
+.auth-form input {
+  padding: 0.8rem 0.9rem;
+  border: 2.5px solid var(--line);
+  background: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.auth-form input::placeholder {
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.auth-form button {
+  padding: 0.85rem;
+  background: var(--green);
+  color: #fff;
+  border: 2.5px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.auth-form button:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.auth-form button:active:not(:disabled) {
+  transform: translate(0, 0);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.auth-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-form p {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.auth-form a {
+  color: var(--orange);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.error {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-align: center;
+  margin: 0;
+  padding: 0.6rem;
+  background: var(--danger);
+  border: 2px solid var(--line);
+}
+
+/* ===== Dashboard ===== */
+.dashboard {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2.4rem;
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.logout-btn {
+  background: #fff;
+  border: 2.5px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  padding: 0.55rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  flex-shrink: 0;
+}
+
+.logout-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.logout-btn:active {
+  transform: translate(0, 0);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.summary-card {
+  background: var(--yellow);
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.summary-card span {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.summary-card strong {
+  font-family: var(--font-mono);
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.expense-form {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow-md);
+  padding: 1.1rem;
+  margin-bottom: 1.75rem;
+}
+
+.expense-form input,
+.expense-form select {
+  padding: 0.7rem 0.8rem;
+  border: 2.5px solid var(--line);
+  background: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  flex: 1;
+  min-width: 120px;
+}
+
+.expense-form input[type="number"] {
+  font-family: var(--font-mono);
+}
+
+.expense-form button {
+  padding: 0.7rem 1.5rem;
+  background: var(--orange);
+  color: #fff;
+  border: 2.5px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.expense-form button:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.expense-form button:active:not(:disabled) {
+  transform: translate(0, 0);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.expense-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.chart-container {
+  background: #fff;
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow-md);
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.75rem;
+}
+
+.chart-container h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+  color: var(--ink);
+}
+
+.category-bar-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 85px;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.category-bar-row .cat-name {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.category-bar-track {
+  height: 14px;
+  background: var(--paper);
+  border: 2px solid var(--line);
+}
+
+.category-bar-fill {
+  height: 100%;
+  border-inline-end: 2px solid var(--line);
+}
+
+.category-bar-row .cat-amount {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-align: end;
+  color: var(--ink);
+}
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow-md);
+}
+
+.expense-table th, .expense-table td {
+  padding: 0.85rem 1rem;
+  text-align: right;
+  border-bottom: 2.5px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.expense-table th {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--ink);
+  font-weight: 800;
+  background: var(--yellow);
+}
+
+.expense-table td:nth-child(3) {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.expense-table tr:last-child td {
+  border-bottom: none;
+}
+
+.delete-btn {
+  background: var(--danger);
+  color: #fff;
+  border: 2px solid var(--line);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  transition: transform 0.1s ease;
+}
+
+.delete-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.empty-state {
+  text-align: center;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 2.5rem 1rem;
+  background: #fff;
+  border: 3px dashed var(--line);
+}
+
+@media (max-width: 480px) {
+  .expense-table thead {
+    display: none;
+  }
+  .expense-table, .expense-table tbody, .expense-table tr, .expense-table td {
+    display: block;
+    width: 100%;
+  }
+  .expense-table tr {
+    padding: 0.85rem 1rem;
+    border-bottom: 2.5px solid var(--line);
+  }
+  .expense-table td {
+    border: none;
+    padding: 0.25rem 0;
+    text-align: start;
+  }
+}
