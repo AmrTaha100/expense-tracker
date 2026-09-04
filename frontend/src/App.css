@@ -243,3 +243,10 @@ button:disabled { cursor: not-allowed; opacity: .65; }
 .category-icon{transition:transform .2s}
 .expense-row:hover .category-icon{transform:scale(1.04)}
 @media(max-width:650px){.insight-total{grid-template-columns:1fr auto}.insight-total b{grid-column:2;grid-row:1}.records-label{font-size:9px}}
+
+.auth-page{overflow:hidden}
+.auth-decoration{position:absolute;right:6vw;bottom:8vh;width:290px;color:#d9e4de;user-select:none;direction:ltr}
+.auth-decoration span{font:800 34px/0.9 'DM Sans',sans-serif;letter-spacing:-2px}.auth-decoration span b{color:var(--accent)}
+.auth-decoration i{font:800 90px/1 'DM Sans',sans-serif;color:#c9dbd2;font-style:normal}.auth-decoration p{direction:rtl;color:#718096;font-size:12px;line-height:1.9;margin:0}
+.auth-brand{z-index:2}
+@media(max-width:900px){.auth-decoration{display:none}}
