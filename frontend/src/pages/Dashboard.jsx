@@ -71,41 +71,68 @@ export default function Dashboard() {
       </header>
 
       <main className="dashboard">
-        <section className="hero">
-          <div>
-            <span className="eyebrow">لوحة التحكم الشخصية</span>
+        <section className="hero-banner">
+          <div className="hero-copy">
+            <span className="hero-kicker">لوحة التحكم الشخصية</span>
             <h1>أهلاً، {user?.name?.split(' ')[0] || 'بك'} 👋</h1>
-            <p>نظرة سريعة على فلوسك، ومصاريفك، وعادات إنفاقك.</p>
+            <p>كل مصروف تسجله هنا بيخليك أقرب لفهم فلوسك والتحكم فيها.</p>
+            <div className="hero-actions">
+              <span className="hero-status"><i /> حسابك متصل وآمن</span>
+              <span className="hero-date">{new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}</span>
+            </div>
           </div>
-          <div className="hero-status"><span className="status-dot" /> حسابك متصل وآمن</div>
+          <div className="hero-total">
+            <span>إجمالي الإنفاق</span>
+            <strong>{currency.format(total)} <small>ج.م</small></strong>
+            <em>{expenses.length ? expenses.length + ' عملية مسجلة' : 'لسه مفيش مصاريف'}</em>
+          </div>
+          <div className="hero-orb hero-orb-one" />
+          <div className="hero-orb hero-orb-two" />
         </section>
 
         <section className="stats-grid" aria-label="ملخص المصاريف">
-          <article className="stat-card stat-primary">
-            <div className="stat-icon">↗</div><div><span>إجمالي المصاريف</span><strong>{currency.format(total)} <small>ج.م</small></strong><em>من بداية الاستخدام</em></div>
+          <article className="stat-card">
+            <div className="stat-icon">◷</div>
+            <div><span>مصروفات الشهر</span><strong>{currency.format(monthTotal)} <small>ج.م</small></strong><em>الشهر الحالي</em></div>
           </article>
           <article className="stat-card">
-            <div className="stat-icon">◷</div><div><span>مصروفات الشهر</span><strong>{currency.format(monthTotal)} <small>ج.م</small></strong><em>الشهر الحالي</em></div>
+            <div className="stat-icon">#</div>
+            <div><span>عدد العمليات</span><strong>{expenses.length}</strong><em>عملية مسجلة</em></div>
           </article>
           <article className="stat-card">
-            <div className="stat-icon">#</div><div><span>عدد العمليات</span><strong>{expenses.length}</strong><em>عملية مسجلة</em></div>
+            <div className="stat-icon">↔</div>
+            <div><span>متوسط العملية</span><strong>{currency.format(average)} <small>ج.م</small></strong><em>لكل مصروف</em></div>
           </article>
-          <article className="stat-card">
-            <div className="stat-icon">◆</div><div><span>أعلى مصروف</span><strong>{currency.format(highestExpense)} <small>ج.م</small></strong><em>أكبر عملية مسجلة</em></div>
+          <article className="stat-card stat-highlight">
+            <div className="stat-icon">◆</div>
+            <div><span>أعلى مصروف</span><strong>{currency.format(highestExpense)} <small>ج.م</small></strong><em>أكبر عملية مسجلة</em></div>
           </article>
         </section>
 
         <section className="dashboard-grid">
           <div className="main-column">
             <div className="section-heading">
-              <div><span className="eyebrow">سجل المصاريف</span><h2>إضافة مصروف</h2></div>
-              <span className="count-pill">{expenses.length} عملية</span>
+              <div><span className="eyebrow">إضافة سريعة</span><h2>سجّل مصروف جديد</h2></div>
+              <span className="count-pill">⚡ بدون تعقيد</span>
             </div>
             <ExpenseForm onAdded={handleAdded} />
-            {loading ? <div className="loading-card"><div className="spinner" /><span>بنجهز بياناتك...</span></div> : <ExpenseList expenses={expenses} onDeleted={handleDeleted} />}
+            {loading ? (
+              <div className="loading-card"><div className="spinner" /><span>بنجهز بياناتك...</span></div>
+            ) : (
+              <ExpenseList expenses={expenses} onDeleted={handleDeleted} />
+            )}
           </div>
+
           <aside className="side-column">
-            {!loading && <ExpenseChart stats={stats} />}
+            {!loading && (
+              <>
+                <div className="side-heading">
+                  <div><span className="eyebrow">رؤية أوضح</span><h2>فين فلوسك بتروح؟</h2></div>
+                  <span>آخر البيانات</span>
+                </div>
+                <ExpenseChart stats={stats} />
+              </>
+            )}
             {refreshing && <div className="sync-note"><span className="spinner mini" /> جاري تحديث الأرقام...</div>}
           </aside>
         </section>
