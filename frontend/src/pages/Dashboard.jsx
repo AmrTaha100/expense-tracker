@@ -12,10 +12,12 @@ export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+  const fetchData = async (silent = false) => {
+    if (!silent) setLoading(true); else setRefreshing(true);
     try {
       const [expRes, statsRes] = await Promise.all([api.get('/expenses'), api.get('/expenses/stats')]);
       setExpenses(expRes.data);
@@ -24,6 +26,7 @@ export default function Dashboard() {
       console.error(err);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -31,12 +34,12 @@ export default function Dashboard() {
 
   const handleAdded = (newExpense) => {
     setExpenses((prev) => [newExpense, ...prev]);
-    fetchData();
+    fetchData(true);
   };
 
   const handleDeleted = (id) => {
     setExpenses((prev) => prev.filter((e) => e._id !== id));
-    fetchData();
+    fetchData(true);
   };
 
   const total = useMemo(() => expenses.reduce((sum, e) => sum + Number(e.amount || 0), 0), [expenses]);
@@ -49,6 +52,7 @@ export default function Dashboard() {
     }, 0);
   }, [expenses]);
   const average = expenses.length ? total / expenses.length : 0;
+  const highestExpense = expenses.length ? Math.max(...expenses.map((e) => Number(e.amount || 0))) : 0;
 
   const handleLogout = () => { logout(); navigate('/login'); };
 
@@ -60,39 +64,50 @@ export default function Dashboard() {
           <div><strong>ExpenseTracker</strong><span>إدارة مصاريفك ببساطة</span></div>
         </div>
         <div className="user-menu">
-          <div className="user-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</div>
           <div className="user-copy"><strong>{user?.name}</strong><span>{user?.email}</span></div>
-          <button onClick={handleLogout} className="logout-btn" type="button">خروج</button>
+          <div className="user-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</div>
+          <button onClick={handleLogout} className="logout-btn" type="button">خروج <span>↪</span></button>
         </div>
       </header>
 
       <main className="dashboard">
         <section className="hero">
           <div>
-            <span className="eyebrow">لوحة التحكم</span>
+            <span className="eyebrow">لوحة التحكم الشخصية</span>
             <h1>أهلاً، {user?.name?.split(' ')[0] || 'بك'} 👋</h1>
-            <p>تابع إنفاقك وخليك مسيطر على مصاريفك.</p>
+            <p>نظرة سريعة على فلوسك، ومصاريفك، وعادات إنفاقك.</p>
           </div>
-          <div className="hero-badge">إدارة مالية أذكى</div>
+          <div className="hero-status"><span className="status-dot" /> حسابك متصل وآمن</div>
         </section>
 
         <section className="stats-grid" aria-label="ملخص المصاريف">
-          <article className="stat-card stat-primary"><div className="stat-icon">↗</div><div><span>إجمالي المصاريف</span><strong>{currency.format(total)} <small>ج.م</small></strong></div></article>
-          <article className="stat-card"><div className="stat-icon">◷</div><div><span>هذا الشهر</span><strong>{currency.format(monthTotal)} <small>ج.م</small></strong></div></article>
-          <article className="stat-card"><div className="stat-icon">#</div><div><span>عدد العمليات</span><strong>{expenses.length}</strong></div></article>
-          <article className="stat-card"><div className="stat-icon">≈</div><div><span>متوسط العملية</span><strong>{currency.format(average)} <small>ج.م</small></strong></div></article>
+          <article className="stat-card stat-primary">
+            <div className="stat-icon">↗</div><div><span>إجمالي المصاريف</span><strong>{currency.format(total)} <small>ج.م</small></strong><em>من بداية الاستخدام</em></div>
+          </article>
+          <article className="stat-card">
+            <div className="stat-icon">◷</div><div><span>مصروفات الشهر</span><strong>{currency.format(monthTotal)} <small>ج.م</small></strong><em>الشهر الحالي</em></div>
+          </article>
+          <article className="stat-card">
+            <div className="stat-icon">#</div><div><span>عدد العمليات</span><strong>{expenses.length}</strong><em>عملية مسجلة</em></div>
+          </article>
+          <article className="stat-card">
+            <div className="stat-icon">◆</div><div><span>أعلى مصروف</span><strong>{currency.format(highestExpense)} <small>ج.م</small></strong><em>أكبر عملية مسجلة</em></div>
+          </article>
         </section>
 
         <section className="dashboard-grid">
           <div className="main-column">
             <div className="section-heading">
-              <div><span className="eyebrow">سجل المصاريف</span><h2>أضف مصروف جديد</h2></div>
+              <div><span className="eyebrow">سجل المصاريف</span><h2>إضافة مصروف</h2></div>
               <span className="count-pill">{expenses.length} عملية</span>
             </div>
             <ExpenseForm onAdded={handleAdded} />
             {loading ? <div className="loading-card"><div className="spinner" /><span>بنجهز بياناتك...</span></div> : <ExpenseList expenses={expenses} onDeleted={handleDeleted} />}
           </div>
-          <aside className="side-column">{!loading && <ExpenseChart stats={stats} />}</aside>
+          <aside className="side-column">
+            {!loading && <ExpenseChart stats={stats} />}
+            {refreshing && <div className="sync-note"><span className="spinner mini" /> جاري تحديث الأرقام...</div>}
+          </aside>
         </section>
       </main>
     </div>
