@@ -60,7 +60,7 @@ export default function Dashboard() {
     <div className="app-shell">
       <header className="topbar">
         <div className="brand">
-          <span className="brand-mark">₤</span>
+          <span className="brand-mark">ج</span>
           <div><strong>ExpenseTracker</strong><span>إدارة مصاريفك ببساطة</span></div>
         </div>
         <div className="user-menu">
