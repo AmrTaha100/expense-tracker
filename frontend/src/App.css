@@ -218,3 +218,12 @@ button:disabled { cursor: not-allowed; opacity: .65; }
   .auth-brand > span:last-child { display: none; }
   .auth-form { padding: 24px 20px; margin-top: 35px; }
 }
+
+
+.hero-status{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);padding:9px 13px;border-radius:999px;color:var(--muted);font-size:10px;font-weight:700;box-shadow:0 5px 18px rgba(23,33,43,.04)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px #e7f5ee}
+.stat-card em{display:block;font-style:normal;color:var(--muted);font-size:9px;margin-top:3px}
+.stat-primary em{color:rgba(255,255,255,.7)}
+.sync-note{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--muted);font-size:10px;padding:10px}
+.spinner.mini{width:13px;height:13px;border-width:2px}
+@media(max-width:650px){.hero-status{align-self:flex-start}.topbar{height:68px}.logout-btn span{display:none}}
