@@ -8,7 +8,7 @@ export default function Register() {
   const submit=async(e)=>{e.preventDefault();setError('');setLoading(true);try{await register(name,email,password);navigate('/dashboard')}catch(err){setError(err.response?.data?.message||'حصل خطأ أثناء إنشاء الحساب.')}finally{setLoading(false)}};
   return <div className="auth-page">
     <div className="auth-decoration"><span>BUILD YOUR<br/><b>BETTER HABITS</b></span><i>+</i><p>سجّل مصاريفك.<br/>افهم عاداتك. ووفّر أكتر.</p></div>
-    <div className="auth-brand"><span className="brand-mark large">₤</span><strong>ExpenseTracker</strong></div>
+    <div className="auth-brand"><span className="brand-mark large">ج</span><strong>ExpenseTracker</strong></div>
     <form className="auth-form" onSubmit={submit}>
       <div className="auth-heading"><span className="eyebrow">خطوة صغيرة، فرق كبير</span><h1>إنشاء حساب</h1><p>ابدأ تنظيم مصاريفك من النهارده.</p></div>
       {error&&<p className="error" role="alert">{error}</p>}
