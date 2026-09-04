@@ -5,11 +5,27 @@ import { useAuth } from '../context/AuthContext';
 export default function Register() {
   const [name,setName]=useState('');const [email,setEmail]=useState('');const [password,setPassword]=useState('');const [error,setError]=useState('');const [loading,setLoading]=useState(false);
   const { register }=useAuth();const navigate=useNavigate();
-  const submit=async(e)=>{e.preventDefault();setError('');setLoading(true);try{await register(name,email,password);navigate('/dashboard')}catch(err){setError(err.response?.data?.message||'حصل خطأ أثناء إنشاء الحساب.')}finally{setLoading(false)}};
+
+  const submit=async(e)=>{
+    e.preventDefault(); setError(''); setLoading(true);
+    try { await register(name,email,password); navigate('/dashboard'); }
+    catch(err){setError(err.response?.data?.message||'حصل خطأ أثناء إنشاء الحساب.');}
+    finally{setLoading(false);}
+  };
+
   return <div className="auth-page">
-    <div className="auth-decoration"><span>BUILD YOUR<br/><b>BETTER HABITS</b></span><i>+</i><p>سجّل مصاريفك.<br/>افهم عاداتك. ووفّر أكتر.</p></div>
-    <div className="auth-brand"><span className="brand-mark large">ج</span><strong>ExpenseTracker</strong></div>
+    <div className="auth-showcase">
+      <div className="showcase-brand"><span className="brand-mark large">ج</span><strong>ExpenseTracker</strong></div>
+      <div className="showcase-content">
+        <span>ابدأ عادة أحسن.</span>
+        <h2>كل جنيه له<br/><b>قرار.</b></h2>
+        <p>حوّل تسجيل المصاريف من مهمة مملة لعادة بسيطة تساعدك تفهم نمط إنفاقك.</p>
+        <div className="showcase-points"><i>✓</i> حسابك في مكان واحد <i>✓</i> بياناتك خاصة</div>
+      </div>
+      <div className="showcase-grid" />
+    </div>
     <form className="auth-form" onSubmit={submit}>
+      <div className="mobile-auth-brand"><span className="brand-mark large">ج</span><strong>ExpenseTracker</strong></div>
       <div className="auth-heading"><span className="eyebrow">خطوة صغيرة، فرق كبير</span><h1>إنشاء حساب</h1><p>ابدأ تنظيم مصاريفك من النهارده.</p></div>
       {error&&<p className="error" role="alert">{error}</p>}
       <label className="auth-field"><span>الاسم</span><input type="text" placeholder="اسمك" value={name} onChange={e=>setName(e.target.value)} autoComplete="name" required/></label>
